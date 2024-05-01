@@ -28,23 +28,19 @@ int main() {
 
 	Map gameMap;
 	gameMap.addLocation("Forest", {{"north", "Field"}, {"east", "River"}, {"south", "Plains"}, {"west", "Cave"}},
-			"You are in a forest. Paths lead in all directions",
-			"You see paths that lead north to a field, east to a river, south to plains, and west to a cave.\n");
+			"You see paths that lead north to a field, east to a river, south to plains, and west to a cave.");
 
-	gameMap.addLocation("Field", {{"south", "Forest"}},
-			"A field extends under the open sky.",
+	gameMap.addLocation("Field", {{"south", "Forest"},{"east", "Cave"},{"west", "River"}, {"north", "Plains"}},
 			"The path back to the forest is clear, and you can see the forest to the south.");
 
-	gameMap.addLocation("River", {{"west", "Forest"}},
+	gameMap.addLocation("River", {{"west", "Cave"},{"east", "Plains"},{"north", "Field"},{"south", "Forest"}},
 			"The river flows swiftly here.");
 
-	gameMap.addLocation("Plains", {{"north", "Forest"}},
-			"The plains are wide and open.",
+	gameMap.addLocation("Plains", {{"north", "Forest"},{"south", "Field"},{"east", "River"},{"west", "Cave"}},
 			"You can see the forest to the north.");
 
-	gameMap.addLocation("Cave", {{"east", "Forest"}},
-			"The entrance to the cave is dark.",
-			".");
+	gameMap.addLocation("Cave", {{"east", "Forest"},{"north", "Plains"},{"west", "Cave"},{"south", "Field"}},
+			"The entrance to the cave is dark");
 
 	char directionChar;
 	std::string direction;
@@ -79,7 +75,7 @@ int main() {
 		direction = (directionChar == 'N') ? "north" :
 			(directionChar == 'E') ? "east" :
 			(directionChar == 'S') ? "south" :
-			(directionChar == 'W') ? "west" : "";
+			(directionChar == 'W') ? "west" : ""  ;
 
 		if (directionChar == 'Q') {
 			std::cout << "Exiting game. Thank you for playing!" << std::endl;
