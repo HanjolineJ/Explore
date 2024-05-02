@@ -1,9 +1,3 @@
-//#ifndef MAP_H
-//#define MAP_H
-
-//#include <map>
-//#include <string>
-//#include <iostream>
 #include "map.h"
 #include <iostream>
 
