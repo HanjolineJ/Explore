@@ -15,7 +15,7 @@ int main() {
 	std::vector<Character> characters;
 
 	std::string name;
-	std::cout <<  "You woke up with no memory. You need to find a way out and survive.\n";
+	std::cout <<  "You need to find a way out of the woods and survive.\n";
 	std::cout <<  "You remember if lost in woods find water, find water to escape the woods.\n";
 	std::cout << "Enter your character name: ";
 	std::cin >> name; //lets player add name
@@ -30,17 +30,17 @@ int main() {
 	gameMap.addLocation("Forest", {{"north", "Field"}, {"east", "River"}, {"south", "Plains"}, {"west", "Cave"}},
 			"You see paths that lead north to a field, east to a river, south to plains, and west to a cave.");
 
-	gameMap.addLocation("Field", {{"south", "Forest"},{"east", "Cave"},{"west", "River"}, {"north", "Plains"}},
+	gameMap.addLocation("Field", {{"south", "Forest"}, {"east", "Cave"}, {"west", "Plains"}, {"north", "River"}},
 			"The path back to the forest is clear, and you can see the forest to the south.");
 
-	gameMap.addLocation("River", {{"west", "Cave"},{"east", "Plains"},{"north", "Field"},{"south", "Forest"}},
-			"The river flows swiftly here.");
+	gameMap.addLocation("River", {{"west", "Field"}, {"east", "Plains"}, {"north", "Cave"}, {"south", "Forest"}},
+			"The river flows nice here.");
 
-	gameMap.addLocation("Plains", {{"north", "Forest"},{"south", "Field"},{"east", "River"},{"west", "Cave"}},
+	gameMap.addLocation("Plains", {{"north", "River"}, {"south", "Cave"}, {"east", "Forest"}, {"west", "Field"}},
 			"You can see the forest to the north.");
 
-	gameMap.addLocation("Cave", {{"east", "Forest"},{"north", "Plains"},{"west", "River"},{"south", "Field"}},
-			"The entrance to the cave is dark");
+	gameMap.addLocation("Cave", {{"east", "Forest"}, {"north", "Plains"}, {"west", "River"}, {"south", "Field"}},
+			"The cave is dark.");
 
 	char directionChar;
 	std::string direction;
@@ -51,27 +51,7 @@ int main() {
 		std::cout << "Choose a direction to explore (N/E/S/W): ";
 		std::cin >> directionChar;//input
 		directionChar = std::toupper(directionChar);//uppercase
-
-		//		switch (directionChar) {
-		//			case 'N':
-		//				direction = "north";
-		//				break;
-		//			case 'E':
-		//				direction = "east";
-		//				break;
-		//			case 'S':
-		//				direction = "south";
-		//				break;
-		//			case 'W':
-		//				direction = "west";
-		//				break;
-		//			case 'Q':  // Add a quit option
-		//				std::cout << "Exiting game. Thank you for playing!" << std::endl;
-		//				return 0;  // Exit the game
-		//			default:
-		//				std::cout << "Invalid direction. Try again." << std::endl;
-		//				continue;
-		//		}
+							    //
 		direction = (directionChar == 'N') ? "north" :
 			(directionChar == 'E') ? "east" :
 			(directionChar == 'S') ? "south" :
@@ -82,31 +62,25 @@ int main() {
 			break;
 		}
 		if (!gameMap.move(direction)) {
-			//std::cout << "Invalid direction. Try again." << std::endl;
 			std::cout << "Invalid direction. Please choose N, E, S, or W." << std::endl;
 			continue;
 		}	else if (gameMap.getCurrentLocation() == "River") {
 			std::cout << "You hear the sound of running water growing stronger. ";
-			std::cout << "Following it downstream, you find a small village. You are safe again. Congrats for making it out.\n";
+			std::cout << "Following it, you find a small village. Congrats for making it out, with " << characters[0].getHealth() << " health remaining." << std::endl;
 			break;
+
 		} else if (gameMap.getCurrentLocation() == "Cave") {
 			std::cout << "A bear attacks as you enter the cave!\n";
-			//	player.health -= 25
-			// Decrease the health by 25
 			characters[0].setHealth(characters[0].getHealth() - 25);
 
-			// Output the new health value
 			std::cout << "New Health: " << characters[0].getHealth() << std::endl;
 
-			//			std::cout << characters[0].health -= 25;
 			if (characters[0].getHealth() <= 0) {
 				std::cout << "You died, do you want to play again? (yes/no): ";
 				std::string input;
 				std::cin >> input;
 				if (input == "yes") {
 					characters[0].setHealth(100);
-					//	characters[0].setHealth() = 100;  // Reset health or whatever initial health is
-					// Reset or restart game logic here
 				} else {
 					std::cout << "Game Over!\n";
 					break;  // Exit the game loop
