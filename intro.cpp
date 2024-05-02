@@ -20,7 +20,7 @@ int main() {
 	std::cout << "Enter your character name: ";
 	std::cin >> name; //lets player add name
 	std::cout << "Here are your stats\n";
-	characters.push_back(Character(name, 100, 75));//Display input name
+	characters.push_back(Character(name, 100));//Display input name
 
 	for (auto& character : characters) {
 		character.display();
@@ -39,7 +39,7 @@ int main() {
 	gameMap.addLocation("Plains", {{"north", "Forest"},{"south", "Field"},{"east", "River"},{"west", "Cave"}},
 			"You can see the forest to the north.");
 
-	gameMap.addLocation("Cave", {{"east", "Forest"},{"north", "Plains"},{"west", "Cave"},{"south", "Field"}},
+	gameMap.addLocation("Cave", {{"east", "Forest"},{"north", "Plains"},{"west", "River"},{"south", "Field"}},
 			"The entrance to the cave is dark");
 
 	char directionChar;
@@ -89,7 +89,31 @@ int main() {
 			std::cout << "You hear the sound of running water growing stronger. ";
 			std::cout << "Following it downstream, you find a small village. You are safe again. Congrats for making it out.\n";
 			break;
+		} else if (gameMap.getCurrentLocation() == "Cave") {
+			std::cout << "A bear attacks as you enter the cave!\n";
+			//	player.health -= 25
+			// Decrease the health by 25
+			characters[0].setHealth(characters[0].getHealth() - 25);
+
+			// Output the new health value
+			std::cout << "New Health: " << characters[0].getHealth() << std::endl;
+
+			//			std::cout << characters[0].health -= 25;
+			if (characters[0].getHealth() <= 0) {
+				std::cout << "You died, do you want to play again? (yes/no): ";
+				std::string input;
+				std::cin >> input;
+				if (input == "yes") {
+					characters[0].setHealth(100);
+					//	characters[0].setHealth() = 100;  // Reset health or whatever initial health is
+					// Reset or restart game logic here
+				} else {
+					std::cout << "Game Over!\n";
+					break;  // Exit the game loop
+				}
+			}
 		}
+
 
 
 	} while (true);
